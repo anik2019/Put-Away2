@@ -23,9 +23,9 @@ import com.warehouse.putaway.service.PutawayService;
 @RestController
 @ConfigurationProperties
 public class PutAwayController {
-	
+
 	@Autowired
-    private BeanConfig appConfig;
+	private BeanConfig appConfig;
 
 	/*
 	 * @Value("${sharedattribute: default attribute - Config Server is not working..pelase check}"
@@ -55,7 +55,7 @@ public class PutAwayController {
 
 	@Autowired
 	RestTemplate restTemplate;
-	
+
 	@Autowired
 	PutawayService putawayService;
 
@@ -87,44 +87,21 @@ public class PutAwayController {
 	public ResponseEntity<?> getProductList(@RequestBody List<String> barcodes) {
 
 		final String url = appConfig.getSearchProductListUrl();
-		
+
 		List<ProductDTO> prodDetails = new ArrayList<ProductDTO>();
 		prodDetails = putawayService.getProductList(url, barcodes);
-		
+
 		return new ResponseEntity<>(prodDetails, HttpStatus.OK);
 
 	}
 
 	@PostMapping("/insertProducts")
 	public ResponseEntity<?> insertProducts(@RequestBody List<ProductDTO> pdtoList) {
-		
+
 		final String url = appConfig.getInsertProducts();
 		putawayService.insertProducts(url, pdtoList);
 
 		return new ResponseEntity<>("Put away completed", HttpStatus.OK);
 	}
 
-	@PostMapping("/productsDeleteForPickup")	
-	public ResponseEntity<?> productsDeleteForPickup(@RequestBody List<String> names){
-		// log.info("Bar Code List : {}",listOfBarcode);
-
-		RestTemplate restTemplate = new RestTemplate();
-
-		final String baseUrl = "http://localhost:8080/productsDeleteForPickup";
-		URI uri = null;
-		try {
-			uri = new URI(baseUrl);
-		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		/*
-		 * List<String> names = new ArrayList<String>(); names.add("B123");
-		 */
-
-		ResponseEntity<String> result = restTemplate.postForEntity(uri, names, String.class);
-
-		return new ResponseEntity<>(result, HttpStatus.OK);
-	}
 }
