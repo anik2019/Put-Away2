@@ -1,0 +1,29 @@
+spring:
+  #profiles:
+   # active: prod   
+  #cloud:
+    #bus:
+      #enabled: true 
+  #RabbitMQ connection details
+  #rabbitmq:
+  #  host: localhost
+  #  port: 5672
+  #  username: guest
+  #  password: guest
+
+searchProductListUrl: 'http://localhost:8080/multiplBarCodeSearch'
+insertProducts: 'http://localhost:8080/productsEntryForPutAway'
+  
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+                    
+  security:
+    enabled: false
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
