@@ -103,5 +103,5 @@ public class PutAwayController {
 
 		return new ResponseEntity<>("Put away completed", HttpStatus.OK);
 	}
-
+	
 }
